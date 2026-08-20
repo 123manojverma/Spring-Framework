@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!--    <bean id="orderService" name="orderServiceBean, orderServiceBean2" class="com.example.OrderService">-->
+    <!--        <constructor-arg ref="paymentService"/>-->
+    <!--    </bean>-->
+
+    <!--    <bean id="orderService" class="com.example.OrderService">-->
+    <!--        <property name="paymentServiceBean" ref="paymentService"/>-->
+    <!--    </bean>-->
+    <!--    <bean id="paymentService" class="com.example.PaymentService">-->
+    <!--        <constructor-arg name="type" index="0" value="UPI"/>-->
+    <!--        <constructor-arg name="retryCount" index="1" value="3"/>-->
+    <!--    </bean>-->
+    <!--    <bean id="orderService1" class="com.example.OrderService"/>-->
+
+    <bean id="upiPaymentService" class="com.example.payment.UPIPaymentService"/>
+
+    <bean id="cardPaymentService" class="com.example.payment.CardPaymentService"/>
+
+    <bean id="orderService" class="com.example.OrderService">
+        <constructor-arg ref="upiPaymentService"/>
+    </bean>
+
+    <!--    <bean id="userService" class="com.example.UserService" scope="prototype"/>-->
+
+    <!--    <bean id="userService" class="com.example.UserService">-->
+    <!--        <constructor-arg name="usernames">-->
+    <!--            <list>-->
+    <!--                <value>Aditya</value>-->
+    <!--                <value>Karan</value>-->
+    <!--                <value>Ram</value>-->
+    <!--            </list>-->
+    <!--&lt;!&ndash;            <map>&ndash;&gt;-->
+    <!--&lt;!&ndash;                <entry key="" value=""/>&ndash;&gt;-->
+    <!--&lt;!&ndash;                <entry key="" value=""/>&ndash;&gt;-->
+    <!--&lt;!&ndash;                <entry key="" value=""/>&ndash;&gt;-->
+    <!--&lt;!&ndash;            </map>&ndash;&gt;-->
+    <!--        </constructor-arg>-->
+    <!--    </bean>-->
+
+    <bean id="userService"
+          class="com.example.UserService"
+          init-method="init"
+          destroy-method="cleanup"
+    />
+
+</beans>
