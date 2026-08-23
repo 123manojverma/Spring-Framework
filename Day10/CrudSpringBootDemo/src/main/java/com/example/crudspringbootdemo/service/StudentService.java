@@ -4,6 +4,9 @@ import com.example.crudspringbootdemo.entity.Student;
 import com.example.crudspringbootdemo.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class StudentService {
 
@@ -14,18 +17,42 @@ public class StudentService {
     }
 
     public Student createStudent(Student studentReq){
-//        business logic
-//        store to db
-        System.out.println("Inside Student Service");
-        Student studentRes=studentRepository.saveStudent(studentReq);
-        System.out.println("Exiting Student Service");
+        Student studentRes=studentRepository.save(studentReq);
         return studentRes;
     }
-//    1. End point listen (/app/students  POST)
 
-//    2. Business logic
+    public Student getStudent(Long id){
+        Optional<Student> student=studentRepository.findById(id);
+        return student.orElse(null);
+    }
 
-//    3. Interact with DB to store
+    public List<Student> getAllStudents(){
+        List<Student>students=studentRepository.findAll();
+        return students;
+    }
 
-//    4. Response back to client (postman)
+    public Student updateStudent(Long id,Student studentReq){
+        Optional<Student> studentRes= studentRepository.findById(id);
+        if(studentRes.isEmpty()){
+            return null;
+        }
+
+        Student studentToSave=studentRes.get();
+        studentToSave.setName(studentReq.getName());
+        studentToSave.setAge(studentReq.getAge());
+        studentToSave.setEmail(studentReq.getEmail());
+        studentToSave.setRollNo(studentReq.getRollNo());
+        studentToSave.setSubject(studentReq.getSubject());
+        return studentRepository.save(studentToSave);
+    }
+
+    public Boolean deleteStudent(Long id){
+        boolean isStudent= studentRepository.existsById(id);
+        if(!isStudent){
+            return false;
+        }
+
+        studentRepository.deleteById(id);
+        return true;
+    }
 }
