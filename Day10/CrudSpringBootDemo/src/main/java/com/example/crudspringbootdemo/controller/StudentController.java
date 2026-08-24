@@ -20,6 +20,7 @@ public class StudentController {
 
     @PostMapping
     public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+        student.setDeleted(false);
         Student createdStudent = studentService.createStudent(student);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdStudent);
     }
@@ -47,8 +48,8 @@ public class StudentController {
     }
 
     //    update student
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Student> updateStudent(@PathVariable Long id,@RequestBody Student studentReq) {
+    @PutMapping("/update")
+    public ResponseEntity<Student> updateStudent(@RequestParam Long id,@RequestBody Student studentReq) {
         Student student = studentService.updateStudent(id,studentReq);
         if (student == null) {
             return ResponseEntity.notFound().build();
@@ -63,6 +64,17 @@ public class StudentController {
         if(!isDeleted){
             return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok("Record deleted");
+    }
+
+    @PatchMapping("/delete-soft/{id}")
+    public ResponseEntity<String> deleteStudentSoftly(@PathVariable Long id){
+        Boolean isDeleted=studentService.deleteStudentSoftly(id);
+
+        if(!isDeleted){
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok("Record deleted");
     }
 }

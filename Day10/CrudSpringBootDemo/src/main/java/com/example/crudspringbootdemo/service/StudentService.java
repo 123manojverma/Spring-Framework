@@ -4,6 +4,7 @@ import com.example.crudspringbootdemo.entity.Student;
 import com.example.crudspringbootdemo.repository.StudentRepository;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,17 +23,26 @@ public class StudentService {
     }
 
     public Student getStudent(Long id){
-        Optional<Student> student=studentRepository.findById(id);
-        return student.orElse(null);
+//        Optional<Student> student=studentRepository.findById(id);
+//        if(student.isEmpty() || student.get().getDeleted()){
+//            return null;
+//        }
+//        return student.get();
+
+        Optional<Student> studentResp=studentRepository.findByIdAndDeletedIsFalse(id);
+        if(studentResp.isPresent()){
+            return studentResp.get();
+        }
+        return null;
     }
 
     public List<Student> getAllStudents(){
-        List<Student>students=studentRepository.findAll();
+        List<Student>students=studentRepository.findByDeletedIsFalse();
         return students;
     }
 
     public Student updateStudent(Long id,Student studentReq){
-        Optional<Student> studentRes= studentRepository.findById(id);
+        Optional<Student> studentRes= studentRepository.findByIdAndDeletedIsFalse(id);
         if(studentRes.isEmpty()){
             return null;
         }
@@ -43,6 +53,7 @@ public class StudentService {
         studentToSave.setEmail(studentReq.getEmail());
         studentToSave.setRollNo(studentReq.getRollNo());
         studentToSave.setSubject(studentReq.getSubject());
+        studentToSave.setDeleted(false);
         return studentRepository.save(studentToSave);
     }
 
@@ -53,6 +64,17 @@ public class StudentService {
         }
 
         studentRepository.deleteById(id);
+        return true;
+    }
+
+    public Boolean deleteStudentSoftly(Long id){
+        Optional<Student>existingStudent= studentRepository.findByIdAndDeletedIsFalse(id);
+        if(existingStudent.isEmpty()){
+            return false;
+        }
+        Student studentToSave=existingStudent.get();
+        studentToSave.setDeleted(true);
+        studentRepository.save(studentToSave);
         return true;
     }
 }
