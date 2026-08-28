@@ -36,14 +36,10 @@ public class StudentController {
     @GetMapping("/{id}")
     public ResponseEntity<CreateStudentResponseDto> readStudent(@PathVariable Long id) {
         CreateStudentResponseDto student = studentService.getStudent(id);
-        if (student == null) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-            return ResponseEntity.notFound().build();
-        }
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("/getAll")
+    @GetMapping
     public ResponseEntity<List<CreateStudentResponseDto>> getAllStudent() {
         List<CreateStudentResponseDto> students = studentService.getAllStudents();
 
@@ -55,33 +51,24 @@ public class StudentController {
     }
 
     //    update student
-    @PutMapping("/update")
+    @PutMapping
     public ResponseEntity<UpdateStudentResponseDto> updateStudent(@RequestParam Long id,@RequestBody UpdateStudentRequestDto studentReq) {
         UpdateStudentResponseDto student = studentService.updateStudent(id,studentReq);
-        if (student == null) {
-            return ResponseEntity.notFound().build();
-        }
+
         return ResponseEntity.ok(student);
     }
 
 //    delete student
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteStudent(@PathVariable Long id){
-        Boolean isDeleted=studentService.deleteStudent(id);
-        if(!isDeleted){
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok("Record deleted");
+    @DeleteMapping
+    public ResponseEntity<String> deleteStudent(@RequestParam Long id){
+        studentService.deleteStudent(id);
+        return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/delete-soft/{id}")
-    public ResponseEntity<String> deleteStudentSoftly(@PathVariable Long id){
-        Boolean isDeleted=studentService.deleteStudentSoftly(id);
+    @PatchMapping
+    public ResponseEntity<String> deleteStudentSoftly(@RequestParam Long id){
+        studentService.deleteStudentSoftly(id);
 
-        if(!isDeleted){
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok("Record deleted");
+        return ResponseEntity.noContent().build();
     }
 }
