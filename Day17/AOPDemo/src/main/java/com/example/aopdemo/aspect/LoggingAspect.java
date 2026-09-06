@@ -88,6 +88,8 @@ public class LoggingAspect {
 
      */
 
+    /*
+
     @Around(value = "execution(* com.example.aopdemo.service.StudentService.dummyMethod(..))")
     public Object logAroundMethod(ProceedingJoinPoint joinPoint)throws Throwable{
 //        Object[] arr=joinPoint.getArgs();
@@ -112,4 +114,63 @@ public class LoggingAspect {
 
         return return2;
     }
+
+     */
+
+//    @Before("execution(* com.example.aopdemo.service.StudentService.*(*))")
+//    @Before("execution(* com.example.aopdemo.service.StudentService.*(..))")
+//    @Before("within(com.example.aopdemo.service.StudentService)")
+//    @Before("@annotation(jdk.jfr.Timestamp)")
+//    public void logBeforeMethod(){
+//        System.out.println("Method Intercepted");
+//    }
+
+
+//    @Around("@annotation(jdk.jfr.Timestamp)")
+//    public void logBeforeMethod(){
+//        System.out.println("Method Intercepted");
+//    }
+
+
+//    @Before("bean(studentService) || bean(studentController)")
+//    public void logBeforeMethod(){
+//        System.out.println("Method Intercepted");
+//    }
+
+
+//    @Pointcut("within(com.example.aopdemo.service..*) && execution(public * * (..))")
+//    public void logPublicServiceMethod(){
+////        empty body
+//    }
+
+//    @Before("com.example.aopdemo.aspect.ApplicationPointcuts.publicServiceMethod()")
+//    public void logBeforeMethod(){
+//        System.out.println("Method Intercepted");
+//    }
+
+//    @Before("@within(org.springframework.stereotype.Service)")
+//    public void logBeforeMethod(){
+//        System.out.println("Method Intercepted");
+//    }
+
+//    @Before("args(com.example.aopdemo.dto.Student) && within(com.example.aopdemo.service..*)")
+//    public void logBeforeMethod2(){
+//        System.out.println("Method Intercepted");
+//    }
+
+//    @Before("@args(jdk.jfr.Timestamp) && within(com.example.aopdemo.service..*)")
+//    public void logBeforeMethod3(){
+//        System.out.println("Method Intercepted");
+//    }
+
+    @Before("this(com.example.aopdemo.service.StudentService)")
+    public void logBeforeMethod3(){
+        System.out.println("Method Intercepted");
+    }
+
+//    @Before("execution(com.example.aopdemo.dto.Student com.example.aopdemo.service.StudentService.createStudent(com.example.aopdemo.dto.Student))")
+//    public void logBeforeMethod2(){
+//        System.out.println("Method Intercepted");
+//    }
+
 }
