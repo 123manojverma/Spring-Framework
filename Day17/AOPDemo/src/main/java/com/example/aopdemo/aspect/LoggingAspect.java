@@ -6,8 +6,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.springframework.stereotype.Component;
 
-@Component
-@Aspect
+//@Component
+//@Aspect
 public class LoggingAspect {
 
 //    @Before("execution(String com.example.aopdemo.service.StudentService.createStudent())") // pointcut expression
@@ -163,10 +163,10 @@ public class LoggingAspect {
 //        System.out.println("Method Intercepted");
 //    }
 
-    @Before("this(com.example.aopdemo.service.StudentService)")
-    public void logBeforeMethod3(){
-        System.out.println("Method Intercepted");
-    }
+//    @Before("this(com.example.aopdemo.service.StudentService)")
+//    public void logBeforeMethod3(){
+//        System.out.println("Method Intercepted");
+//    }
 
 //    @Before("execution(com.example.aopdemo.dto.Student com.example.aopdemo.service.StudentService.createStudent(com.example.aopdemo.dto.Student))")
 //    public void logBeforeMethod2(){
