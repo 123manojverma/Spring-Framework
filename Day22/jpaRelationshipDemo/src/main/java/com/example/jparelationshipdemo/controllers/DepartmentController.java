@@ -14,15 +14,21 @@ public class DepartmentController {
         this.departmentService =departmentService;
     }
 
-    @PostMapping
-    public ResponseEntity<String> createDepartment(@RequestBody Department department){
-        departmentService.createDepartment(department);
-        return ResponseEntity.ok("DONE");
-    }
+//    @PostMapping
+//    public ResponseEntity<String> createDepartment(@RequestBody Department department){
+//        departmentService.createDepartment(department);
+//        return ResponseEntity.ok("DONE");
+//    }
+//
+//    @PostMapping("/withstudent")
+//    public ResponseEntity<String> createDepartment(@RequestBody Department department, @RequestParam String studentName){
+//        departmentService.createDepartment(department,studentName);
+//        return ResponseEntity.ok("DONE");
+//    }
 
-    @PostMapping("/withstudent")
-    public ResponseEntity<String> createDepartment(@RequestBody Department department, @RequestParam String studentName){
-        departmentService.createDepartment(department,studentName);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteDepartment(@PathVariable Long id){
+        departmentService.removeDepartment(id);
         return ResponseEntity.ok("DONE");
     }
 }

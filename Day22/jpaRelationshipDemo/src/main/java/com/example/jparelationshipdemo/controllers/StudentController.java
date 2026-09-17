@@ -18,16 +18,28 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @PostMapping("/{deptId}")
-    public ResponseEntity<String> createStudent(@RequestBody Student student, @PathVariable Long deptId){
-        studentService.createStudent(student,deptId);
+//    @PostMapping("/{deptId}")
+//    public ResponseEntity<String> createStudent(@RequestBody Student student, @PathVariable Long deptId){
+//        studentService.createStudent(student,deptId);
+//        return ResponseEntity.ok("DONE");
+//    }
+
+    @PostMapping
+    public ResponseEntity<String> createStudent(@RequestBody Student student){
+        studentService.createStudent(student);
         return ResponseEntity.ok("DONE");
     }
 
-    @PostMapping
-    public ResponseEntity<String> createStudent(@RequestBody Student student,@RequestParam String deptName){
-        studentService.createStudent(student,deptName);
-        return ResponseEntity.ok("DONE");
+    @GetMapping("/{id}")
+    public ResponseEntity<Student> getStudent(@PathVariable Long id){
+        Student student=studentService.fetchStudentId(id);
+        return ResponseEntity.ok(student);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Student>>getAllStudents(){
+        List<Student>students=studentService.findAll();
+        return ResponseEntity.ok(students);
     }
 
 }

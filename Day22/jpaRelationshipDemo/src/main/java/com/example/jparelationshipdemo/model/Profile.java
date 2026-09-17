@@ -17,7 +17,7 @@ public class Profile {
 
     private String bio;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+//    @OneToOne
+//    @JoinColumn(name = "user_id")
+//    private User user;
 }
