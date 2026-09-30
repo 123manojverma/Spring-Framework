@@ -3,8 +3,8 @@ package com.example.springpracticaldemo.controller;
 import com.example.springpracticaldemo.dto.UserRegisterRequestDto;
 import com.example.springpracticaldemo.dto.UserRegisterResponseDto;
 import com.example.springpracticaldemo.service.AuthService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfToken;
@@ -20,15 +20,10 @@ public class UserController {
         this.authService = authService;
     }
 
-    private PasswordEncoder passwordEncoder=new BCryptPasswordEncoder();
 
     @GetMapping("/hello")
-    public String sayHello(){
-        System.out.println(passwordEncoder.encode("secret123"));
-        System.out.println(passwordEncoder.encode("secret123"));
-
-        System.out.println(passwordEncoder.matches("secret123","$2a$10$/vSrhyWr1fQJC2Xpotk7..FzDZMxwoSi4Ld7vtzIqn0luDWauxX4O"));
-        return "Hello";
+    public String sayHello(Authentication authentication){
+        return "Hello, you are logged in as : "+authentication.getName();
     }
 
     @PostMapping("/register")
